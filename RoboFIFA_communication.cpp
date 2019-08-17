@@ -37,18 +37,18 @@ void RoboFIFA_communication::loop(){
   client.loop();
 }
 void RoboFIFA_communication::reconnect() {
-  char mqtt_name[32] = "RoboFIFA/";
-  int len = strlen(mqtt_name);
-  sprintf(mqtt_name + len, "robot%i", robot_id);
+  char mqtt_string[32] = "RoboFIFA/";
+  int len = strlen(mqtt_string);
+  sprintf(mqtt_string + len, "robot%i", robot_id);
   Serial.print("Attempting MQTT connection...");
   // Attempt to connect
-  if (client.connect(mqtt_name + len)) {
+  if (client.connect(mqtt_string + len)) {
     Serial.print("connected as ");
-    Serial.println(mqtt_name + len);
+    Serial.println(mqtt_string + len);
     // Subscribe
-    client.subscribe(mqtt_name);
+    client.subscribe(mqtt_string);
     Serial.print("subscribed to ");
-    Serial.println(mqtt_name);
+    Serial.println(mqtt_string);
   } else {
     Serial.print("failed, rc=");
     Serial.print(client.state());
@@ -56,4 +56,11 @@ void RoboFIFA_communication::reconnect() {
     // Wait 1 seconds before retrying
     delay(1000);
   }
+}
+
+void RoboFIFA_communication::publish(char* msg) {
+  char mqtt_topic[32] = "RoboFIFA/feedback/";
+  int len = strlen(mqtt_topic);
+  sprintf(mqtt_topic + len, "robot%i", robot_id);
+  client.publish(mqtt_topic, msg);
 }

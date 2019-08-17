@@ -16,7 +16,7 @@ void callback(char* topic, byte* message, unsigned int length) {
 }
 
 void setup() {
-  
+
   Serial.begin(115200);
   const char* ssid = "miwifi";
   const char* password = "neeneenee";
@@ -27,16 +27,16 @@ void setup() {
 
 void loop() {
   static long lastMsg = 0;
-  
+
   com.loop();
 
   long now = millis();
   if (now - lastMsg > 5000) {
     lastMsg = now;
-    
+
     // Convert the value to a char array
     char tempString[32];
     dtostrf(lastMsg, 1, 2, tempString);
-    com.client.publish("esp32/temperature", tempString);
+    com.publish(tempString);
   }
 }

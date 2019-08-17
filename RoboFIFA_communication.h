@@ -12,11 +12,11 @@ class RoboFIFA_communication{
     void setup_mqtt(void (*callback)(char*, byte*, unsigned int));
     void loop();
     void reconnect();
-    PubSubClient client;
+    void publish(char* msg);
     int robot_id = 0;
   private:
-    // Replace the next variables with your SSID/Password combination
     WiFiClient espClient;
+    PubSubClient client;
     const char* mqtt_server;
     void (*callback)(char*, byte*, unsigned int);
 };
