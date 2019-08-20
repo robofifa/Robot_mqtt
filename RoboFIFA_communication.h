@@ -5,8 +5,15 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 
+
+
 class RoboFIFA_communication{
   public:
+
+	typedef struct {
+		float left;
+		float right;
+	}robot_msg;
     RoboFIFA_communication(const char* mqtt_server);
     void setup_wifi(const char* ssid, const char* password);
     void setup_mqtt(void (*callback)(char*, byte*, unsigned int));
